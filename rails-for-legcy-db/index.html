@@ -39,8 +39,8 @@ class: center middle
 ## 那么遗留数据库有哪些痛
 
 ### - **表名的差异**
-### - 形态各异及命名丰富的主键
-### - 字段的大小写
+### - 主键的差异
+### - 字段的差异
 ### - 实体关系
 
 ---
@@ -107,6 +107,57 @@ class: center middle
 ]
 .right-column[
 ``Wordpress``, CMD
+]
+---
+## 那么遗留数据库有哪些痛
+
+### - 表名的差异
+### - **主键的差异**
+### - 字段的差异
+### - 实体关系
+---
+## 主键的差异
+
+### 命名
+
+表名: ``reservation_detail``  
+主键: ``reservation_detail_id`` vs ``id``
+
+### 类型
+
+UUID、按规则拼接、复合主键
+
+---
+## 主键的差异 - 实践
+.left-column[
+
+### - 名称差异 
+
+]
+.right-column[
+其实主键名称问题最容易处理  
+
+`migration` 
+
+    class CreateReservationDetails < ActiveRecord::Migration
+      def change
+        create_table :reservation_details, 
+                     :primary_key=>:reservation_detail_id do |t|
+          # attributes ...
+        end
+        # ... 
+      end
+    end
+    
+`model`
+
+    class ReservationDetail < ActiveRecord::Base
+      # ...
+      self.primary_key = :reservation_detail_id
+      alias_attribute :reservation_detail_id, :id
+      # attr_accessible .... 
+    end      
+    
 ]
 ---
 name: last-page
