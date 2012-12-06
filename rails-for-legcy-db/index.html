@@ -40,7 +40,7 @@ class: center middle
 
 ### - **表名的差异**
 ### - 主键的差异
-### - 字段的差异
+### - 时间戳的差异
 ### - 实体关系
 
 ---
@@ -113,7 +113,7 @@ class: center middle
 
 ### - 表名的差异
 ### - **主键的差异**
-### - 字段的差异
+### - 时间戳的差异
 ### - 实体关系
 ---
 ## 主键的差异
@@ -135,8 +135,6 @@ UUID、按规则拼接、复合主键
 
 ]
 .right-column[
-其实主键名称问题最容易处理  
-
 `migration` 
 
     class CreateReservationDetails < ActiveRecord::Migration
@@ -159,6 +157,51 @@ UUID、按规则拼接、复合主键
     end      
     
 ]
+---
+## 那么遗留数据库有哪些痛
+
+### - 表名的差异
+### - 主键的差异
+### - **时间戳的差异**
+### - 实体关系
+---
+## 时间戳的差异
+
+Rails默认时间戳
+
+    created_at, updated_at
+
+公司数据库中的时间戳
+
+    created_date, last_modified_date
+
+**解决方法**
+
+``config/initializers/active_record.rb``
+
+    module ActiveRecord
+      module Timestamp      
+        private
+        def timestamp_attributes_for_update #:nodoc:
+          [:last_modified_date, :updated_at, :updated_on, :modified_at]
+        end
+        def timestamp_attributes_for_create #:nodoc:
+          [:create_date, :created_at, :created_on]
+        end      
+      end
+    end
+---
+## 那么遗留数据库有哪些痛
+
+### - 表名的差异
+### - 主键的差异
+### - 时间戳的差异
+### - **实体关系**
+---
+## 实体关系
+
+ ...
+
 ---
 name: last-page
 template: inverse
