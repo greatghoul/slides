@@ -87,7 +87,12 @@ class: center middle
         end
       end
       rename_table :groups, :group
-      # rename_table :groups, :'the_Namesucks'
+    end
+
+或者
+
+    create_table :groups do |t|
+        # ...
     end
     
 `model`
@@ -137,7 +142,7 @@ UUID、按规则拼接、复合主键
 .right-column[
 `migration` 
 
-    class CreateReservationDetails < ActiveRecord::Migration
+    class createreservationdetails < activerecord::migration
       def change
         create_table :reservation_details, 
                      :primary_key=>:reservation_detail_id do |t|
@@ -149,13 +154,81 @@ UUID、按规则拼接、复合主键
     
 `model`
 
-    class ReservationDetail < ActiveRecord::Base
+    class reservationdetail < activerecord::base
       # ...
       self.primary_key = :reservation_detail_id
       alias_attribute :reservation_detail_id, :id
       # attr_accessible .... 
     end      
     
+]
+---
+## 主键的差异 - 实践
+.left-column[
+
+### - 名称差异 
+### - 类型差异 
+
+]
+.right-column[
+非默认类型主键无法识别
+
+`migration` 
+
+    class CreateDetails < ActiveRecord::Migration
+      def change
+        create_table :details, :id => false do |t|
+          t.string, :code
+          # attributes ...
+        end
+        execute 'ALTER TABLE details ADD PRIMARY KEY(code);'
+        # ... 
+      end
+    end
+    
+`model`
+
+    class Detail < ActiveRecord::Base
+      # ..
+      self.primary_key = :code
+      # attr_accessible .... 
+    end      
+    
+]
+---
+## 主键的差异 - 实践
+.left-column[
+
+### - 名称差异 
+### - 类型差异 
+### - UUID 
+
+]
+.right-column[
+[通用唯一识别码 (Universally Unique Identifier, UUID)](http://zh.wikipedia.org/wiki/UUID) 标准类型包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的32个字符。示例； ``550e8400-e29b-41d4-a716-446655440000`` 
+
+`lib/uuid_helper.rb`
+
+    require 'rubygems'
+    require 'uuidtools'
+
+    module UUIDHelper
+      def before_create()
+        self.id = UUID.timestamp_create().to_s
+      end
+    end
+
+`migration & model` 
+    # migration
+    create_table :details, :id => false do |t|
+      t.string, :id, :limit => 32
+    end
+    execute 'ALTER TABLE details ADD PRIMARY KEY(id);'
+
+    # model
+    class Detail < ActiveRecord::Base
+      # attr_accessible .... 
+    end      
 ]
 ---
 ## 那么遗留数据库有哪些痛
