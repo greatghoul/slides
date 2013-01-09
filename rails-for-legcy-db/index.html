@@ -24,17 +24,16 @@ class: center middle
 class: center middle
 ## Convention Over Configuration
 然后，有时你不得去面对一些发酵的配置，比如，遗留数据库...
+
+.footnote[ .red[#] [Ruby and Rails Naming Conventions](http://itsignals.cascadia.com.au/?p=7) ]
 ---
 ## 背景
 
-公司有一个租车管理的系统，客户表示这个系统各种难用，于是重新设计，而且数据库需要兼容原版，但是工期很短，用PHP怎么都是完成不了，于是上Rails。
-
-使用Rails的默认命名约定开发一个新项目会非常快，因为一无所有，所以无所顾忌，Rails的便利会让你顺风顺水，但当你面对一个前人留下的庞然大物时，而你没有办法去改变它，而只能去适应时，Rails 就没有想象中的那么快了（其实还是比一些语言快）
-
-遗留问题永远都是一个让人头疼的问题，遗留数据库也不例外，尤其是设计糟糕的遗留库，而且你不能改变它，因为 **It still works!**
-
-
-.footnote[.red[#] Ruby and Rails Naming Conventions - http://itsignals.cascadia.com.au/?p=7 ]
+### - 老数据库
+### - 不能修改
+### - 命名不规范
+### - 大量冗余
+### - 自定规则主键
 ---
 ## 那么遗留数据库有哪些痛
 
@@ -49,13 +48,13 @@ class: center middle
 不同的 ``DBA`` 数据库表的命名方式真的千差万别
 
     create table driver(...);
-    create table reservationdetail(...);
+    create table order_detail(...);
     create table person(...);
 
 而 ``Rails`` 默认是这样
 
     Driver ................ drivers
-    ReservationDetail ..... reservation_details
+    OrderDetail ..... order_details
     Person ................ people
 
 **其它**：表前缀(如 ``wp_``) 或后缀 (如 ``_tb``)
@@ -125,8 +124,9 @@ class: center middle
 
 ### 命名
 
-表名: ``reservation_detail``  
-主键: ``reservation_detail_id`` vs ``id``
+表名: ``detail``, ``details``  
+主键: ``detail_id``, ``id``  
+时间: ``create_at``, ``last_modified_date`` ...
 
 ### 类型
 
@@ -142,10 +142,9 @@ UUID、按规则拼接、复合主键
 .right-column[
 `migration` 
 
-    class createreservationdetails < activerecord::migration
+    class CreateDetails < ActiveRecord::Migration
       def change
-        create_table :reservation_details, 
-                     :primary_key=>:reservation_detail_id do |t|
+        create_table :details, :primary_key => :detail_id do |t|
           # attributes ...
         end
         # ... 
@@ -154,10 +153,10 @@ UUID、按规则拼接、复合主键
     
 `model`
 
-    class reservationdetail < activerecord::base
+    class Detail < ActiveRecord::Base
       # ...
-      self.primary_key = :reservation_detail_id
-      alias_attribute :reservation_detail_id, :id
+      self.primary_key = :detail_id
+      alias_attribute :detail_id, :id
       # attr_accessible .... 
     end      
     
@@ -205,28 +204,59 @@ UUID、按规则拼接、复合主键
 
 ]
 .right-column[
-[通用唯一识别码 (Universally Unique Identifier, UUID)](http://zh.wikipedia.org/wiki/UUID) 标准类型包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的32个字符。示例； ``550e8400-e29b-41d4-a716-446655440000`` 
+[通用唯一识别码 (Universally Unique Identifier, UUID)](http://zh.wikipedia.org/wiki/UUID) 标准类型包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的36个字符。示例； ``550e8400-e29b-41d4-a716-446655440000`` 
+_(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E4%B8%80%E8%AF%86%E5%88%AB%E7%A0%81))_
 
-`lib/uuid_helper.rb`
+**加入UUIDHelper**
+
+`lib/extras/uuid_helper.rb`
 
     require 'rubygems'
     require 'uuidtools'
 
     module UUIDHelper
-      def before_create()
-        self.id = UUID.timestamp_create().to_s
+      def self.included(base)
+        base.class_eval do
+          before_create :set_guuid
+
+          def set_guuid
+            self.id = UUIDTools::UUID.random_create.to_s
+          end
+        end
       end
     end
 
-`migration & model` 
+`config/application.rb`
+
+    config.autoload_paths += %W(#{config.root}/extras)
+]
+---
+## 主键的差异 - 实践
+.left-column[
+
+### - 名称差异 
+### - 类型差异 
+### - UUID 
+
+]
+.right-column[
+**Migration 和 Model**
+
+`migration`
+
     # migration
     create_table :details, :id => false do |t|
-      t.string, :id, :limit => 32
+      t.string, :id, :limit => 36
     end
     execute 'ALTER TABLE details ADD PRIMARY KEY(id);'
 
-    # model
-    class Detail < ActiveRecord::Base
+_根据数据库的不同，这里设置主键的语句会有变化_
+
+`model`
+
+    class Ietail < ActiveRecord::Base
+      include UUIDHelper
+      self.primary_key = :id
       # attr_accessible .... 
     end      
 ]
