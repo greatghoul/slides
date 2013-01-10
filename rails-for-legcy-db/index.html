@@ -18,7 +18,7 @@ layout: true
 class: inverse
 ---
 class: center middle
-#Rails for Legacy Database
+# Rails for Legacy Database
 [greatghoul]
 ---
 class: center middle
@@ -63,21 +63,12 @@ class: center middle
 ---
 ## 表名的差异 - 实践
 .left-column[
-### - 全部单数
-]
-.right-column[
-[指导](http://guides.rubyonrails.org/configuring.html#configuring-active-record)
-]
----
-## 表名的差异 - 实践
-.left-column[
-
-### - 全部单数  
 ### - 少量单数
-
 ]
 .right-column[
-`migration` 
+如果数据库中只有少数表名为单数模式，则可以单独在 migrate 时做修改。
+
+``migration`` 
 
     class CreateGroups < ActiveRecord::Migration
       def change
@@ -90,14 +81,14 @@ class: center middle
 
 或者
 
-    create_table :groups do |t|
+    create_table :group do |t|
         # ...
     end
     
-`model`
+``model``
 
     class Group < ActiveRecord::Base
-      self.table_name = :group
+      self.table_name = 'group'
       # attr_accessible .... 
     end      
     
@@ -105,8 +96,41 @@ class: center middle
 ---
 ## 表名的差异 - 实践
 .left-column[
-### - 全部单数  
 ### - 少量单数
+### - 大量单数
+]
+.right-column[
+如果大部分的表都为单数，就没有必要逐个修改表名，rails 提供了统一的[配置方法](http://guides.rubyonrails.org/configuring.html#configuring-active-record)，来自动生成单数表名，对于个别复数或者不规则的情况，可能参考上一切的方法修改。
+
+``config/application.rb``
+
+    class Application < Rails::Application
+       # ...
+       config.active_record.pluralize_table_names = false 
+    end
+
+设置为单数模式后 generator 会自动生成单数表名
+
+    rails g model Customer name:string
+
+生成的 migrate  
+
+    class CreateCustomer < ActiveRecord::Migration
+      def change
+        create_table :customer do |t|
+          t.string :name
+
+          t.timestamps
+        end
+      end
+    end
+
+]
+---
+## 表名的差异 - 实践
+.left-column[
+### - 少量单数
+### - 大量单数  
 ### - 前缀后缀
 ]
 .right-column[
@@ -124,13 +148,12 @@ class: center middle
 
 ### 命名
 
-表名: ``detail``, ``details``  
-主键: ``detail_id``, ``id``  
-时间: ``create_at``, ``last_modified_date`` ...
+``detail_id``, ``id``  
 
 ### 类型
 
-UUID、按规则拼接、复合主键
+字符型：UUID、按规则拼接  
+复合型：复合主键
 
 ---
 ## 主键的差异 - 实践
@@ -177,7 +200,7 @@ UUID、按规则拼接、复合主键
     class CreateDetails < ActiveRecord::Migration
       def change
         create_table :details, :id => false do |t|
-          t.string, :code
+          t.string, :code, :limit => 36
           # attributes ...
         end
         execute 'ALTER TABLE details ADD PRIMARY KEY(code);'
@@ -185,6 +208,8 @@ UUID、按规则拼接、复合主键
       end
     end
     
+_根据数据库的不同，这里设置主键的语句会有变化_
+
 `model`
 
     class Detail < ActiveRecord::Base
@@ -207,9 +232,7 @@ UUID、按规则拼接、复合主键
 [通用唯一识别码 (Universally Unique Identifier, UUID)](http://zh.wikipedia.org/wiki/UUID) 标准类型包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的36个字符。示例； ``550e8400-e29b-41d4-a716-446655440000`` 
 _(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E4%B8%80%E8%AF%86%E5%88%AB%E7%A0%81))_
 
-**加入UUIDHelper**
-
-`lib/extras/uuid_helper.rb`
+``lib/extras/uuid_helper.rb``
 
     require 'rubygems'
     require 'uuidtools'
@@ -220,13 +243,13 @@ _(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E
           before_create :set_guuid
 
           def set_guuid
-            self.id = UUIDTools::UUID.random_create.to_s
+            self.code = UUIDTools::UUID.random_create.to_s
           end
         end
       end
     end
 
-`config/application.rb`
+``config/application.rb``
 
     config.autoload_paths += %W(#{config.root}/extras)
 ]
@@ -240,23 +263,11 @@ _(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E
 
 ]
 .right-column[
-**Migration 和 Model**
-
-`migration`
-
-    # migration
-    create_table :details, :id => false do |t|
-      t.string, :id, :limit => 36
-    end
-    execute 'ALTER TABLE details ADD PRIMARY KEY(id);'
-
-_根据数据库的不同，这里设置主键的语句会有变化_
 
 `model`
 
     class Ietail < ActiveRecord::Base
       include UUIDHelper
-      self.primary_key = :id
       # attr_accessible .... 
     end      
 ]
