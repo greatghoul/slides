@@ -24,8 +24,6 @@ class: center middle
 class: center middle
 ## Convention Over Configuration
 然后，有时你不得去面对一些发酵的配置，比如，遗留数据库...
-
-.footnote[ .red[#] [Ruby and Rails Naming Conventions](http://itsignals.cascadia.com.au/?p=7) ]
 ---
 ## 背景
 
@@ -134,7 +132,32 @@ class: center middle
 ### - 前缀后缀
 ]
 .right-column[
-``Wordpress``, CMD
+Wordpress 及一些 CMS 会有表名前缀或者后缀的规则
+
+``config/application.rb``
+
+    class Application < Rails::Application
+      # ...
+      config.active_record.table_name_prefix = 'foo_'
+      config.active_record.table_name_suffix = '_bar'
+    end
+
+执行
+
+    $ rails g modal Detail name:string
+
+    # migration output
+    create_table :details do |t|
+      t.string :name
+      # ...
+    end
+    
+    # database output
+    create table foo_details_bar ( ... );
+
+前后缀作用于全局，但可在 model 中显式指定表名绕过规则。
+
+    self.table_name = 'details'
 ]
 ---
 ## 那么遗留数据库有哪些痛
@@ -229,9 +252,6 @@ _根据数据库的不同，这里设置主键的语句会有变化_
 
 ]
 .right-column[
-[通用唯一识别码 (Universally Unique Identifier, UUID)](http://zh.wikipedia.org/wiki/UUID) 标准类型包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的36个字符。示例； ``550e8400-e29b-41d4-a716-446655440000`` 
-_(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E4%B8%80%E8%AF%86%E5%88%AB%E7%A0%81))_
-
 ``lib/extras/uuid_helper.rb``
 
     require 'rubygems'
@@ -252,6 +272,13 @@ _(via: [维基百科](http://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E5%94%AF%E
 ``config/application.rb``
 
     config.autoload_paths += %W(#{config.root}/extras)
+    
+``model``
+
+    class Ietail < ActiveRecord::Base
+      include UUIDHelper
+      # attr_accessible .... 
+    end      
 ]
 ---
 ## 主键的差异 - 实践
@@ -315,6 +342,11 @@ Rails默认时间戳
 ## 实体关系
 
  ...
+---
+## 参考资料
+
+ * [Universally Unique Identifier, UUID](http://zh.wikipedia.org/wiki/UUID)
+ * [Ruby and Rails Naming Conventions](http://itsignals.cascadia.com.au/?p=7)
 
 ---
 name: last-page
