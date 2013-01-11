@@ -343,6 +343,65 @@ Rails默认时间戳
 
  ...
 ---
+## Tip#1: vim 快速将表字段转为 Generate 语句
+``vim配置``
+
+    " 转换公司的DB描述
+    function DbConvert()
+      :%s/^\s*\(\S\+\)\s\+varchar\s\+\(\d\+\)\s*$/    \1:string{\2} \\/g
+      :%s/^\s*\(\S\+\)\s\+int\s*$/    \1:integer \\/g
+      :%s/^\s*\(\S\+\)\s\+datetime\s*$/    \1:datetime \\/g
+      :%s/^\s*\(\S\+\)\s\+tinyint\s*$/    \1:boolean \\/g
+    endfunction
+
+``调用``
+
+    :call DbConvert()
+
+    # source
+    column1 varchar 10
+    column2 int
+    column3 tinyint
+    column4 datetime
+
+    # output
+    rails g scaffold Detail \
+        column1:string{10} \
+        column2:integer \
+        column3:boolean \
+        column4:datetime
+---
+## Tip#2: 快速将数据库转为 Model 文件
+``单表``
+
+    rails g model table_name
+
+``整库``
+
+    gem install rmre
+    rmre -a mysql -d dbname -u user -p pwd -o app/models
+
+    # output
+    class District < ActiveRecord::Base
+        self.table_name = 'district'
+        self.primary_key = :district_code
+
+    end
+
+_[rmre](https://github.com/bosko/rmre) 会自动为你配置好主键和表名_
+
+``attr_accessible``
+
+    :%s/\(\w\+\)\s*\n/:\1, /g
+    
+    # source 
+    title
+    body
+
+    # output
+    :title, :body
+
+---
 ## 参考资料
 
  * [Universally Unique Identifier, UUID](http://zh.wikipedia.org/wiki/UUID)
