@@ -23,7 +23,7 @@ class: center middle
 ---
 class: center middle
 ## Convention Over Configuration
-然后，有时你不得去面对一些发酵的配置，比如，遗留数据库...
+然后，有时你不得去面对一些必要的配置，比如，遗留数据库...
 ---
 ## 背景
 
@@ -38,7 +38,6 @@ class: center middle
 ### - **表名的差异**
 ### - 主键的差异
 ### - 时间戳的差异
-### - 实体关系
 
 ---
 ## 表名的差异
@@ -165,7 +164,6 @@ Wordpress 及一些 CMS 会有表名前缀或者后缀的规则
 ### - 表名的差异
 ### - **主键的差异**
 ### - 时间戳的差异
-### - 实体关系
 ---
 ## 主键的差异
 
@@ -179,14 +177,14 @@ Wordpress 及一些 CMS 会有表名前缀或者后缀的规则
 复合型：复合主键
 
 ---
-## 主键的差异 - 实践
+## 主键的差异
 .left-column[
 
 ### - 名称差异 
 
 ]
 .right-column[
-`migration` 
+``migration`` 
 
     class CreateDetails < ActiveRecord::Migration
       def change
@@ -197,18 +195,24 @@ Wordpress 及一些 CMS 会有表名前缀或者后缀的规则
       end
     end
     
-`model`
+``model``
 
     class Detail < ActiveRecord::Base
       # ...
       self.primary_key = :detail_id
+      self.sequence_name = 'YOUR_SEQUENCE_NAME' # Oracle only
       alias_attribute :detail_id, :id
       # attr_accessible .... 
     end      
+
+**TIP: ** 查找ORACLE表的SEQUENCE
     
+    select * from user_sequences
+    where sequence_name like '%TABLE_NAME%'
+
 ]
 ---
-## 主键的差异 - 实践
+## 主键的差异
 .left-column[
 
 ### - 名称差异 
@@ -243,7 +247,7 @@ _根据数据库的不同，这里设置主键的语句会有变化_
     
 ]
 ---
-## 主键的差异 - 实践
+## 主键的差异
 .left-column[
 
 ### - 名称差异 
@@ -275,28 +279,71 @@ _根据数据库的不同，这里设置主键的语句会有变化_
     
 ``model``
 
-    class Ietail < ActiveRecord::Base
+    class Detail < ActiveRecord::Base
       include UUIDHelper
       # attr_accessible .... 
     end      
 ]
 ---
-## 主键的差异 - 实践
+## 主键的差异
 .left-column[
 
 ### - 名称差异 
 ### - 类型差异 
-### - UUID 
+### - UUID
+### - 规则拼接 
+
+]
+.right-column[
+与 [UUID](#13) 类似，先使用 [类型差异](#12) 一节中的方法设置一个字符型的主键
+
+`model`
+
+    class Detail < ActiveRecord::Base
+      before_create :set_code
+
+      def set_code
+        self.code = "#{attr1}-#{attr2}" 
+      end
+    end      
+]
+---
+## 主键的差异
+.left-column[
+
+### - 名称差异 
+### - 类型差异 
+### - UUID
+### - 规则拼接 
+### - 联合主键
 
 ]
 .right-column[
 
-`model`
+gem [composite_primary_keys](http://compositekeys.rubyforge.org/)
+    
+``migration``
 
-    class Ietail < ActiveRecord::Base
-      include UUIDHelper
-      # attr_accessible .... 
-    end      
+    create_table :detail, :id => false do |t|
+      t.integer :id1
+      t.integer :id2
+      t.string :name
+    end
+    execute 'ALTER TABLE detail ADD PRIMARY KEY(id1, id2);'
+
+``model``
+
+    class Detail < ActiveRecord::Base 
+      self.primary_keys = :id1, :id2 
+    end
+
+``relations``
+
+    belongs_to :detail, :foreign_key => [:id1, :id2]
+
+``query``
+
+    Detail.find(1, 1)
 ]
 ---
 ## 那么遗留数据库有哪些痛
@@ -304,7 +351,6 @@ _根据数据库的不同，这里设置主键的语句会有变化_
 ### - 表名的差异
 ### - 主键的差异
 ### - **时间戳的差异**
-### - 实体关系
 ---
 ## 时间戳的差异
 
@@ -332,18 +378,7 @@ Rails默认时间戳
       end
     end
 ---
-## 那么遗留数据库有哪些痛
-
-### - 表名的差异
-### - 主键的差异
-### - 时间戳的差异
-### - **实体关系**
----
-## 实体关系
-
- ...
----
-## Tip#1: vim 快速将表字段转为 Generate 语句
+## Tip#1 vim 快速将表字段转为 Generate 语句
 ``vim配置``
 
     " 转换公司的DB描述
@@ -371,7 +406,7 @@ Rails默认时间戳
         column3:boolean \
         column4:datetime
 ---
-## Tip#2: 快速将数据库转为 Model 文件
+## Tip#2 快速将数据库转为 Model 文件
 ``单表``
 
     rails g model table_name
@@ -402,17 +437,35 @@ _[rmre](https://github.com/bosko/rmre) 会自动为你配置好主键和表名_
     :title, :body
 
 ---
+## Tip#3 显式的指定Model主键，关系和表名
+
+``理由``
+
+ * 有的gem不规范，不会认异于 Rails 约定的主键和关系
+ * 异于约定的表名、主键和关系配置显示指定可以提高速度
+
+``显式指定关系``
+
+    belongs_to :detail, :class_name => Detail, :foreign_key => :detail_id
+
+---
 ## 参考资料
 
  * [Universally Unique Identifier, UUID](http://zh.wikipedia.org/wiki/UUID)
  * [Ruby and Rails Naming Conventions](http://itsignals.cascadia.com.au/?p=7)
+ * [Rails Composite Primary Keys](http://compositekeys.rubyforge.org/)
+ * [Ruby on Rails Guides](http://guides.rubyonrails.org/)
+ * [Ruby on Rails RDoc](http://api.rubyonrails.org/)
+ * [Ruby on Rails 3 Model Working with Legacy Database](http://jonathanhui.com/ruby-rails-3-model-working-legacy-database)
+ * [Getting rails to play with a legacy Oracle database](http://www.pixellatedvisions.com/2009/06/08/getting-rails-to-play-with-a-legacy-oracle-database)
+ * [Rails and Legacy Databases - RailsConf 2009](http://www.slideshare.net/napcs/rails-and-legacy-databases-railsconf-2009)
 
 ---
 name: last-page
 template: inverse
 class: center middle
 
-## That's all folks (for now)!
+## Thank you!
 Slideshow created using [remark](http://github.com/gnab/remark).
 
 </textarea>
