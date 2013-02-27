@@ -7,13 +7,15 @@ h1, h2, h3 {
     font-weight: 400;
     margin-bottom: 0;
 }
-h1 { font-size: 4em; }
-h2 { font-size: 2em; }
+h1 { font-size: 2.4em; }
+h2 { font-size: 2.0em; }
 h3 { font-size: 1.6em; }
 .footnote {
     position: absolute;
     bottom: 3em;
 }
+.menu ul li { font-size: 1.6em; }
+
 .red { color: #fa0000; }
 .large { font-size: 2em; }
 a, a > code {
@@ -49,7 +51,6 @@ code {
 }
 .inverse h1, .inverse h2 {
     color: #f3f3f3;
-    line-height: 0.8em;
 }
 
 /* Slide-specific styling */
