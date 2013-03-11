@@ -199,7 +199,7 @@ Wordpress 及一些 CMS 会有表名前缀或者后缀的规则
       # ...
       self.primary_key = :detail_id
       self.sequence_name = 'YOUR_SEQUENCE_NAME' # Oracle only
-      alias_attribute :detail_id, :id
+      alias_attribute :id, :detail_id
       # attr_accessible .... 
     end      
 
