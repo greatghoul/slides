@@ -10,11 +10,14 @@ h1, h2, h3 {
 h1 { font-size: 2.4em; }
 h2 { font-size: 2.0em; }
 h3 { font-size: 1.6em; }
+ul, ol { list-style-position: inside; }
+
 .footnote {
     position: absolute;
     bottom: 3em;
 }
-.menu ul li { font-size: 1.6em; }
+
+.menu li { font-size: 2.0em; }
 
 .red { color: #fa0000; }
 .large { font-size: 2em; }

@@ -16,29 +16,68 @@
 name: inverse
 layout: true
 class: inverse
+
 ---
 class: center middle
+
 # Google OAuth2 及 Analytics Data API 的应用
 &lt; greatghoul - 西安GDG - 2013/03 &gt;  
 
 .footnote[ http://www.g2w.me - Ask and learn.]
+
 ---
 class: center middle
 
 ![开发的屏障](google-vs-gfw.jpg)
+
 ---
 class: menu
+
 # 额外的准备
 
-* VPN (全局, <strike>OpenVPN-</strike>)
-* SSH
-* GoAgent
-* ShadowSocks
+ * VPN (全局, <strike>OpenVPN-</strike>)
+ * SSH
+ * GoAgent
+ * ShadowSocks
+ 
 ---
+class: menu
+
+# 注册服务授权
+
+访问 https://code.google.com/apis/console/ 
+
+.pull-right[
+ ![注册ClientID](client_id.png)
+]
+
+ * 创建 Project
+ * Oauth Toekn
+ * API Key?
+ * .red[按需选权限]
+ * .red[不滥用权限]
+
+.footnote.right[.bold[\*] [ SkillPages利用用户授权滥用联系人信息][^1]]
+
+[^1]: http://g2w.me/2013/03/skillpages-sucks/
+
+---
+
 # Google Oauth2 验证流程
 
 ![Google Oauth2验证流程](oauth2_webflow.png)
+
 ---
+class: menu
+
+# Google Oauth2 验证流程
+
+ 1. 应用请求授权
+ 2. 用户确认授权
+ 3. 应用验证授权
+
+---
+
 name: last-page
 template: inverse
 class: center middle
