@@ -72,10 +72,28 @@ class: menu
 
 # Google Oauth2 验证流程
 
- 1. 应用请求授权
- 2. 用户确认授权
- 3. 应用验证授权
+ 1. 创建配置文件
+ 2. 应用请求授权
+ 3. 用户确认授权
+ 4. 应用验证授权
 
+---
+
+# 一、创建配置文件
+
+`client_secrets.json`
+
+    {
+      "installed": {
+        "client_id": "INSERT CLIENT ID HERE",
+        "client_secret": "INSERT CLIENT SECRET HERE",
+        "redirect_uris": ["INSERT REDIRECT URI"],
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://accounts.google.com/o/oauth2/token"
+      }
+    }
+
+![download json](download_json.png)
 ---
 
 name: last-page
