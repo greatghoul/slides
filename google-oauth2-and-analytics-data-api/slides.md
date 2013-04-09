@@ -1,3 +1,5 @@
+title: Google OAuth2 及 Analytics Data API 的应用
+description: &lt; greatghoul - 西安GDG - 2013/03 &gt;
 name: inverse
 layout: true
 class: inverse
