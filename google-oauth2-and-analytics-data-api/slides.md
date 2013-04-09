@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Google OAuth2 及 Analytics Data API 的应用</title>
-    <link rel="stylesheet" type="text/css" href="../remark-theme-dark.css" />
-    <script src="../remark.min.js" type="text/javascript">
-      {"highlightStyle": "monokai"}
-    </script>
-    <script type="text/javascript">
-        var hljs = remark.highlighter.engine();
-    </script>
-  </head>
-  <body>
-<textarea id="source">
 name: inverse
 layout: true
 class: inverse
@@ -217,10 +202,3 @@ class: center middle
 
 ## Thank you!
 Slideshow created using [remark](http://github.com/gnab/remark).
-</textarea>
-<div id="slideshow"></div>
-</body>
-</html>
-<!-- 
-vim:ft=markdown
--->
