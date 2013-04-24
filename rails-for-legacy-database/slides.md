@@ -1,3 +1,5 @@
+title: Rails for Legacy Database
+theme: ../themes/remark-dark.css
 name: inverse
 layout: true
 class: inverse
