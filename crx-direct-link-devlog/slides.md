@@ -20,6 +20,8 @@ Google 搜索中间页中间页
     url=http%3A%2F%2Fbaike.baidu.com%2Fview%2F917695.htm
     &amp;ei=GNyhUNHdGqSQiAfA34DADQ&amp;usg=AFQjCNGyRS1s0m3_WG-PQHipdfaGU0TxTA
 
+![墙](tee.jpg)
+
 ---
 
 # 为什么会有中间页？
@@ -30,7 +32,7 @@ Google 搜索中间页中间页
 
 ---
 
-# 个人软件：自己是第一用户
+# 自己是第一用户
 
 快速响应  
 目的明确  
@@ -58,27 +60,30 @@ Chromium 百花齐放：枫树、百度 ...
 
 # V1.2 支持更多域名
 
-![墙](V1-2.png)
+![V1.2](V1-2.png)
 
-用户反馈  
-变得复杂  
-
----
-
-# V1.3 开关配置
-
-让用户自己选择
+有了用户选项，不得不设计一个页面，变得复杂  
 
 ---
 
-# V1.4 一个里程碑
+# V1.3 让用户自己选择
 
-![墙](V1-4.png)
+![V1.3](V1-3.png)
 
-用户反馈  
-更多模式  
-拥抱开源: MIT    
-[如何选择开源许可证？](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)  
+安全检查、历史数据、用户感受
+
+---
+
+# V1.4 化繁为简
+
+![V1.4](V1-4.png)
+  
+拥抱开源(MIT)、一种态度
+
+
+.footnote.right[.bold[\*] [ 如何选择开源许可证？][1]]
+
+[1]: http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html
 
 ---
 
