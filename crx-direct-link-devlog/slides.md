@@ -20,7 +20,7 @@ Google 搜索中间页中间页
     url=http%3A%2F%2Fbaike.baidu.com%2Fview%2F917695.htm
     &amp;ei=GNyhUNHdGqSQiAfA34DADQ&amp;usg=AFQjCNGyRS1s0m3_WG-PQHipdfaGU0TxTA
 
-![墙](tee.jpg)
+![墙](gfw.png)
 
 ---
 
