@@ -105,7 +105,7 @@ Chromium 百花齐放：枫树、百度 ...
 
 https://github.com/GDG-Xian/crx-direct-link  
 http://www.g2w.me/tag/direct-link-crx/  
-[Google SSL Privacy Real Link[Chrome/Firefox]](Google SSL Privacy Real Link[Chrome/Firefox])  
+  
 [几款干净的去掉转向浏览器应用](http://www.appinn.com/no-redirect/)  
 [chrome-redirector](http://code.google.com/p/chrome-redirector/)  
 科学上网 :)  
