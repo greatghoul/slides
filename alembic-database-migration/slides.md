@@ -11,6 +11,46 @@ class: inverse center middle
 
 ---
 
+# 什么是 Migration
+
+---
+
+# 为什么需要 Migration ?
+
+---
+
+# 目前比较优秀的 Migration 工具
+
+---
+
+# Alembic
+
+---
+
+# Alembic 环境搭建
+
+---
+
+# 创建 Migration 脚本
+
+---
+
+# 执行 Migration
+
+---
+
+# 常用 Migration 方法
+
+---
+
+# Upgrading & Downgrading
+
+---
+
+# Uliweb 集成
+
+---
+
 # 参考资料
 
  * [Alembic 项目主页](https://bitbucket.org/zzzeek/alembic)
