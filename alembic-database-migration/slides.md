@@ -5,13 +5,13 @@ layout: true
 class: inverse
 
 ---
-class:  center middle
+class: center middle
 
 # 使用 Alembic 进行数据库迁移
 [greatghoul@GDG西安201312]
 
 ---
-class:  center middle
+class: menu
 
 # 如何进行数据库迁移
 
@@ -46,6 +46,7 @@ class: menu
 生成的文件结构如下
 
     yourproject/
+        alembic.ini
         alembic/
             env.py
             README
@@ -76,6 +77,7 @@ class: menu
     # revision_environment = false
     
     sqlalchemy.url = driver://user:pass@localhost/dbname
+    # sqlalchemy.url = postgresql://postgres:postgres@localhost:5432/scriptfan
 
 ---
 
@@ -136,12 +138,9 @@ Migration 脚本结构
 
 # 迁移操作
 
-升级到最新
+升级或降级
 
     $ alembic upgrade head
-
-降级到最初
-
     $ alembic downgrade base
 
 定量升级或者降级
@@ -149,20 +148,17 @@ Migration 脚本结构
     $ alembic upgrade +2
     $ alembic downgrade -1
 
-升级或者降级到指定版本 `ae1027a6acf`
+升级或者降级到指定版本 `ae1027a6acf`，版本号不一定写全，能唯一确定即可
 
     $ alembic upgrade ae1027a6acf
-    $ alembic downgrade ae1027a6acf
-
-上面的例子中，`ae1027a6acf` 不一定要写全，只要能唯一确定该版本即可，如：
-
     $ alembic upgrade ae1
+    $ alembic downgrade ae1027a6acf
 
 生成 sql 脚本
 
-alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
+    alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
 
-执行过的 migration 会被记录在 `alembic_version` 里面
+执行过的 migration 会被记录在 `alembic_version` 表里面
 
 ---
 
@@ -244,7 +240,7 @@ alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
  * [Uliweb Alembic 集成]()
 
 ---
-name: last-page
+class: center middle
 
 ## Thank you!
 Slideshow created using [remark](http://github.com/gnab/remark).
