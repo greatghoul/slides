@@ -27,7 +27,7 @@ h3 {
 }
 
 ul, ol {
-    list-style-position: inside;
+    list-style-position: outside;
 }
 
 .footnote {
@@ -35,8 +35,12 @@ ul, ol {
     bottom: 3em;
 }
 
-.menu li {
+.menu > ul > li {
     font-size: 2.0em;
+}
+
+.menu > ul > li > ul > li {
+    font-size: 1.0em;
 }
 
 .red {

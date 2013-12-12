@@ -15,12 +15,9 @@ class: menu
 
 # 如何进行数据库迁移
 
-- **数据误置管理工具**  
-  操作简单、手动维护、无法版本化、无法自动化 
-- **SQL 脚本**  
-  门槛高、差异大、版本管理、操作不便、低自动化
-- **数据库迁移工具**  
-  API 简单易懂、数据库适配，方便移植、高自动化
+- **数据误置管理工具** 操作简单、手动维护、无法版本化、无法自动化 
+- **SQL 脚本** 门槛高、差异大、版本管理、操作不便、低自动化
+- **数据库迁移工具** API 简单易懂、数据库适配，方便移植、高自动化
 
 ---
 class: menu
@@ -28,10 +25,7 @@ class: menu
 # 目前比较优秀的 Migration 工具
 
 - ActiveRecord Migration
-- Django Database Migration:
-  * South
-  * Django Evoution
-  * dmigrations
+- Django Database Migration: South, Django Evoution, dmigrations
 - SQLAlchemy Migration: Alembic
 
 ---
