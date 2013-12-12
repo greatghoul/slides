@@ -2,14 +2,16 @@ title: Alembic Database Migration
 theme: ../themes/remark-dark.css
 name: inverse
 layout: true
-class: inverse center middle
+class: inverse
 
 ---
+class:  center middle
 
 # 使用 Alembic 进行数据库迁移
 [greatghoul@GDG西安201312]
 
 ---
+class:  center middle
 
 # 如何进行数据库迁移
 
@@ -18,6 +20,7 @@ class: inverse center middle
 - 数据库迁移工具：API 简单易懂、数据库适配，方便移植、高自动化
 
 ---
+class: menu
 
 # 目前比较优秀的 Migration 工具
 
@@ -32,6 +35,7 @@ class: inverse center middle
 <https://bitbucket.org/zzzeek/alembic>
 
 ---
+class: menu
 
 # 安装 Alembic
 
@@ -240,9 +244,7 @@ alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
  * [Uliweb Alembic 集成]()
 
 ---
-
 name: last-page
-template: inverse
 
 ## Thank you!
 Slideshow created using [remark](http://github.com/gnab/remark).
