@@ -15,9 +15,12 @@ class: menu
 
 # 如何进行数据库迁移
 
-- 数据误置管理工具：操作简单、手动维护、无法版本化、无法自动化 
-- SQL 脚本：门槛高、不同数据库差异大、版本管理、操作不便、低自动化
-- 数据库迁移工具：API 简单易懂、数据库适配，方便移植、高自动化
+- **数据误置管理工具**  
+  操作简单、手动维护、无法版本化、无法自动化 
+- **SQL 脚本**  
+  门槛高、差异大、版本管理、操作不便、低自动化
+- **数据库迁移工具**  
+  API 简单易懂、数据库适配，方便移植、高自动化
 
 ---
 class: menu
@@ -25,10 +28,14 @@ class: menu
 # 目前比较优秀的 Migration 工具
 
 - ActiveRecord Migration
-- Django Database Migration: South, Django Evoution, dmigrations
+- Django Database Migration:
+  * South
+  * Django Evoution
+  * dmigrations
 - SQLAlchemy Migration: Alembic
 
 ---
+class: center middle
 
 **Alembic** 是由 **SQLAlchemy** 作者编写的一套数据迁移工具。
 
@@ -114,7 +121,7 @@ Migration 脚本结构
 
 ---
 
-# Upgrading & Downgrading
+# Migration脚本
 
 脚本中明确指定当前版本和上一版本
 
@@ -134,31 +141,6 @@ Migration 脚本结构
 
     def downgrade():
         op.drop_table('account')
----
-
-# 迁移操作
-
-升级或降级
-
-    $ alembic upgrade head
-    $ alembic downgrade base
-
-定量升级或者降级
-
-    $ alembic upgrade +2
-    $ alembic downgrade -1
-
-升级或者降级到指定版本 `ae1027a6acf`，版本号不一定写全，能唯一确定即可
-
-    $ alembic upgrade ae1027a6acf
-    $ alembic upgrade ae1
-    $ alembic downgrade ae1027a6acf
-
-生成 sql 脚本
-
-    alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
-
-执行过的 migration 会被记录在 `alembic_version` 表里面
 
 ---
 
@@ -221,6 +203,32 @@ Migration 脚本结构
     op.create_foreign_key(
                 "fk_user_address", "address",
                 "user", ["user_id"], ["id"])
+
+---
+
+# 迁移操作
+
+升级或降级
+
+    $ alembic upgrade head
+    $ alembic downgrade base
+
+定量升级或者降级
+
+    $ alembic upgrade +2
+    $ alembic downgrade -1
+
+升级或者降级到指定版本 `ae1027a6acf`，版本号不一定写全，能唯一确定即可
+
+    $ alembic upgrade ae1027a6acf
+    $ alembic upgrade ae1
+    $ alembic downgrade ae1027a6acf
+
+生成 sql 脚本
+
+    alembic upgrade 1975ea83b712:ae1027a6acf --sql > migration.sql
+
+执行过的 migration 会被记录在 `alembic_version` 表里面
 
 ---
 
