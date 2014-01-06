@@ -60,7 +60,31 @@ Google Cloud Messagin
 
 ## Cross Origin XHR 
 
-跨域的AJAX
+ * 基于 **pattern** 的白名单的跨域 XHR
+ * 请求扩展内部资源
+ * 避免直接 eval 脚本或 html
+ * Content Security Policy (CSP)
+
+---
+
+manifest.json
+
+    "permissions": [
+      "http://www.google.com/",
+      "https://www.google.com/"
+    ]
+
+Background.js
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://api.example.com/data.json", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        // JSON.parse does not evaluate the attacker's scripts.
+        var resp = JSON.parse(xhr.responseText);
+      }
+    }
+    xhr.send();
 
 ---
 
