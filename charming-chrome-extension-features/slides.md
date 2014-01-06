@@ -88,9 +88,39 @@ Google Cloud Messagin
 
 ---
 
-## background
+## Event Pages
 
-守护进程
+ * Chrome 22+ 
+ * 只在必要时才加载
+ * Alarms 替代 setTimout 和 setInterval
+ * Event Pages v.s. Background Pages
+
+---
+
+Background Pages:
+
+    {
+      "name": "My extension",
+      ...
+      "background": {
+        "scripts": ["background.js"]
+      },
+      ...
+    }
+
+---
+
+Event Pages:
+
+    {
+      "name": "My extension",
+      ...
+      "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
+      },
+      ...
+    }
 
 ---
 name: last-page
