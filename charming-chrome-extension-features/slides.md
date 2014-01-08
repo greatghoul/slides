@@ -83,7 +83,39 @@ class: center, middle
 
 ## storage
 
-随 Google 帐户同步的数据存储
+针对 Chrome 扩展而优化的数据存储功能
+
+ * 随 Google 帐户同步的数据存储
+ * 可以直接在 content scripts 中直接访问
+ * 读写都是异步进行，响应更快，当然也带来一些不便
+ * 数据可以存储为对象，而非字段串
+ * 可以定义要存储的数据的格式以严格验证
+ * 可以监听 storage 的变化
+ * local / sync / managed
+
+---
+
+预定义的格式
+
+manifest.json
+
+    "storage": {
+      "managed_schema": "schema.json"
+    },
+
+schema.json
+
+    {
+      "type": "object",
+      "properties": {
+        "AutoSave": {
+          "title": "Automatically save changes.",
+          "description": "If set to true then changes will be automatically saved.",
+          "type": "boolean"
+        },
+        // ...
+      }
+    }
 
 ---
 
