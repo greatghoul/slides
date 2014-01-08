@@ -30,13 +30,54 @@ class: center, middle
 
 ## commands
 
-快捷键绑定
+ * 支持 A-Z, 0-9, Arrow keys 及很多其它的控制键  
+ * 所以快捷键必须和 **Ctrl** 或 Alt 组合使用
+ * Chrome 原生的快捷键优秀级高于扩展快捷键，且不能被覆盖
+ * 适应不同平台 default / windows / mac / chromeos / linux
+ * 扩展预留 `_execute_browser_action` 和 `_execute_page_action`
+ * 用户可以在扩展页面中自己定义快捷键
 
 ---
 
-## identity
+  "commands": {
+    "toggle-feature-foo": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Toggle feature foo"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y",
+        "chromeos": "Ctrl+Shift+U",
+        "linux": "Ctrl+Shift+J"
+      }
+    },
+  },
 
-OAuth2
+---
+
+响应快捷键的触发事件
+
+    chrome.commands.onCommand.addListener(function(command) {
+      console.log('Command:', command);
+    });
+
+---
+
+<!-- TODO: 添加扩展快捷键自定义的截图 -->
+
+---
+
+## identity (Since 29)
+
+内置的 OAuth2 库
+
+ * 近水楼台先得月，访问自家 Google OAuth2 非常方便
+ * 对于第三方的 OAuth2，需要使用标准流程
+ * Chrome 自动缓存 access token 并代理其过期操作
 
 ---
 
