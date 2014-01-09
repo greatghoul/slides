@@ -39,23 +39,23 @@ class: center, middle
 
 ---
 
-  "commands": {
-    "toggle-feature-foo": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y"
+    "commands": {
+      "toggle-feature-foo": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+Y",
+          "mac": "Command+Shift+Y"
+        },
+        "description": "Toggle feature foo"
       },
-      "description": "Toggle feature foo"
+      "_execute_browser_action": {
+        "suggested_key": {
+          "windows": "Ctrl+Shift+Y",
+          "mac": "Command+Shift+Y",
+          "chromeos": "Ctrl+Shift+U",
+          "linux": "Ctrl+Shift+J"
+        }
+      },
     },
-    "_execute_browser_action": {
-      "suggested_key": {
-        "windows": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y",
-        "chromeos": "Ctrl+Shift+U",
-        "linux": "Ctrl+Shift+J"
-      }
-    },
-  },
 
 ---
 
@@ -121,19 +121,7 @@ schema.json
 
 ---
 
-## #4 pushMessaging
-
-Google Cloud Messagin
-
----
-
-## #5 desktopCapture
-
-桌面截图
-
----
-
-## #6 Cross Origin XHR 
+## #4 Cross Origin XHR 
 
  * 基于 **pattern** 的白名单的跨域 XHR
  * 请求扩展内部资源
@@ -163,13 +151,7 @@ Background.js
 
 ---
 
-## #7 clipboard
-
-访问系统剪贴板
-
----
-
-## #8 webRequest
+## #5 webRequest
 
  * 监听HTTP请求的执行状态
  * 修改请求 cancel / rredirect / headers (limited) / auth 
@@ -180,7 +162,7 @@ Background.js
 
 ---
 
-## alarms
+## #6 alarms
 
  * 简单的定时任务，建议取代 `setTimeout` 和 `setInterval`
  * 按名称唯一标识，重复创建会自动覆盖
@@ -192,7 +174,7 @@ Background.js
 
 ---
 
-## Event Pages
+## #7 Event Pages
 
  * 只在必要时才加载
  * 建议使用 Alarms 替代 `setTimout` 和 `setInterval`
@@ -226,6 +208,14 @@ Event Pages:
       },
       ...
     }
+
+---
+
+## #8 其它特性
+
+ * clipboard
+ * pushMessaging
+ * desktopCapture
 
 ---
 name: last-page
