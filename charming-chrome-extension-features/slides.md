@@ -28,7 +28,7 @@ class: center, middle
 
 ---
 
-## commands
+## #1 commands
 
  * 支持 A-Z, 0-9, Arrow keys 及很多其它的控制键  
  * 所以快捷键必须和 **Ctrl** 或 Alt 组合使用
@@ -71,7 +71,7 @@ class: center, middle
 
 ---
 
-## identity (Since 29)
+## #2 identity
 
 内置的 OAuth2 库
 
@@ -79,9 +79,11 @@ class: center, middle
  * 对于第三方的 OAuth2，需要使用标准流程
  * Chrome 自动缓存 access token 并代理其过期操作
 
+.footnote[Sine 19]
+
 ---
 
-## storage
+## #3 storage
 
 针对 Chrome 扩展而优化的数据存储功能
 
@@ -119,19 +121,19 @@ schema.json
 
 ---
 
-## pushMessaging
+## #4 pushMessaging
 
 Google Cloud Messagin
 
 ---
 
-## desktopCapture
+## #5 desktopCapture
 
 桌面截图
 
 ---
 
-## Cross Origin XHR 
+## #6 Cross Origin XHR 
 
  * 基于 **pattern** 的白名单的跨域 XHR
  * 请求扩展内部资源
@@ -161,21 +163,20 @@ Background.js
 
 ---
 
-## clipboard
+## #7 clipboard
 
 访问系统剪贴板
 
 ---
 
-## webRequest
+## #8 webRequest
 
-分析和控制 Web 请求
+ * 监听HTTP请求的执行状态
+ * 修改请求 cancel / rredirect / headers (limited) / auth 
+ * 修改请求需要额外的权限 **webRequestBlocking**
+ * 更快的 declarativeWebRequest (beta and dev)
 
----
-
-## unlimitedStorage
-
-打破 localStorage 5M 的限制
+.footnote[Since 17]
 
 ---
 
