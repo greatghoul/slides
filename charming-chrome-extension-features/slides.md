@@ -182,16 +182,23 @@ Background.js
 
 ## alarms
 
-浏览器上的定时任务
+ * 简单的定时任务，建议取代 `setTimeout` 和 `setInterval`
+ * 按名称唯一标识，重复创建会自动覆盖
+ * 触发方式：指定时间 / 延迟时间 / 周期时间
+ * 时间的最小粒度为**一分钟**
+ * 可以监听 onAlarm 事件
+
+.footnote[Since 22]
 
 ---
 
 ## Event Pages
 
- * Chrome 22+ 
  * 只在必要时才加载
- * Alarms 替代 setTimout 和 setInterval
+ * 建议使用 Alarms 替代 `setTimout` 和 `setInterval`
  * Event Pages v.s. Background Pages
+
+.footnote[Since 22]
 
 ---
 
