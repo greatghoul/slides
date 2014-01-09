@@ -218,6 +218,17 @@ Event Pages:
  * desktopCapture
 
 ---
+
+## 参考资料
+
+ * [Chrome Extension Documentation](ps://developer.chrome.com/extensions/overview.html)
+ * [Chrome 扩展文档非官方中文版](https://crxdoc-zh.appspot.com/apps/gcm.html)
+ * [Chromium Extensions Google 讨论组](https://groups.google.com/forum/#!forum/chromium-extensions)
+ * [Chrome App Samples](https://github.com/GoogleChrome/chrome-app-samples)
+ * [GDG-Xian@Github](https://github.com/organizations/GDG-Xian)
+ * [Chrome Extension@Reddit](http://www.reddit.com/r/chrome_extensions)
+
+---
 name: last-page
 class: center, middle
 
