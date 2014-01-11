@@ -110,7 +110,7 @@ schema.json
       "properties": {
         "AutoSave": {
           "title": "Automatically save changes.",
-          "description": "If set to true then changes will be automatically saved.",
+          "description": "If set to true then changes ..s.",
           "type": "boolean"
         },
         // ...
@@ -227,13 +227,13 @@ https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
 
 ---
 
+定义快捷键
+
     "commands": {
       "toggle-feature-foo": {
         "suggested_key": {
-          "default": "Ctrl+Shift+Y",
-          "mac": "Command+Shift+Y"
-        },
-        "description": "Toggle feature foo"
+          "default": "Ctrl+Shift+Y"
+        }
       },
       "_execute_browser_action": {
         "suggested_key": {
@@ -244,8 +244,6 @@ https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
         }
       },
     },
-
----
 
 响应快捷键的触发事件
 
