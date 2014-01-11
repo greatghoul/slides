@@ -273,6 +273,7 @@ https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
  * [Chrome 扩展文档非官方中文版](https://crxdoc-zh.appspot.com/apps/gcm.html)
  * [Chromium Extensions Google 讨论组](https://groups.google.com/forum/#!forum/chromium-extensions)
  * [Chrome App Samples](https://github.com/GoogleChrome/chrome-app-samples)
+ * [Chrome Sample Extensions](https://developer.chrome.com/extensions/samples.html)
  * [GDG-Xian@Github](https://github.com/organizations/GDG-Xian)
  * [Chrome Extension@Reddit](http://www.reddit.com/r/chrome_extensions)
 
