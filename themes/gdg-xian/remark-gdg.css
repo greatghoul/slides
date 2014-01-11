@@ -17,12 +17,17 @@ body { font-size: 1.5em; }
 
 .remark-slide-content {
   background-image: url(gdg-xian-small.png);
-  background-position: right top !important;
+  background-position: 99% 1% !important;
   background-size: 20%;
 }
 
 .slide .content {
     padding: 10px 90px !important;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 #slideshow .no-highlight {
