@@ -23,8 +23,20 @@ class: center, middle
 ---
 class: center, middle
 
-# 那些迷人的 Chrome 扩展特性
+## <span style="color: #0679F5">那些迷人的 Chrome 扩展特性</span>
 [greatghoul@GDG西安201401]
+
+---
+
+## 主要特性
+
+ * Event Pages
+ * storage
+ * Cross Origin XHR
+ * webRequest
+ * identity
+ * alarms
+ * commands
 
 ---
 
@@ -119,6 +131,12 @@ schema.json
 
 ---
 
+示例
+
+https://github.com/GoogleChrome/chrome-app-samples?source=c#_feature_storage
+
+---
+
 ## Cross Origin XHR 
 
  * 基于 **pattern** 的白名单的跨域 XHR
@@ -160,6 +178,12 @@ Background.js
 
 ---
 
+示例
+
+https://github.com/GDG-Xian/crx-direct-link
+
+---
+
 ## identity
 
 内置的 OAuth2 库
@@ -186,7 +210,7 @@ Background.js
 
 示例
 
-https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
+https://github.com/GoogleChrome/chrome-app-samples?source=c#_feature_identity
 
 ---
 
@@ -213,6 +237,12 @@ https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
             // do something
         }
     });
+
+---
+
+示例
+
+https://github.com/GDG-Xian/ruby-china-chrome
 
 ---
 
@@ -264,6 +294,10 @@ https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
  * clipboard
  * pushMessaging
  * desktopCapture
+ * offline
+ * framelessWindow
+ * bluetooth
+ * mediaGalleries
 
 ---
 
