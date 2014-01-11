@@ -170,7 +170,7 @@ Background.js
 ## webRequest
 
  * 监听HTTP请求的执行状态
- * 修改请求 cancel / rredirect / headers (limited) / auth 
+ * 修改请求 cancel / redirect / headers (limited) / auth 
  * 修改请求需要额外的权限 **webRequestBlocking**
  * 更快的 declarativeWebRequest (beta and dev)
 
