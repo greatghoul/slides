@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>那些迷人的Chrome扩展特性</title>
+<link rel="stylesheet" type="text/css" href="../themes/gdg-xian/remark-gdg.css" media="screen" />
+</head>
+<body>
+<textarea id="source" style="display: none;">title: 那些迷人的Chrome扩展特性
+layout: true
+theme: ../themes/gdg-xian/remark-gdg.css
+
+---
+name: first-page
+class: center, middle
+
+<img src="../themes/gdg-xian/gdg.png" width="50%" />
+
+<img src="../themes/gdg-xian/gdg-xian-large.png" width="80%" />
+
+### 西安谷歌开发者社区
+
+---
+class: center, middle
+
+<img src="../themes/gdg-xian/gdg-xian-icon.png" />
+
+<h2 style="color: #ff5447;">热烈欢迎你来参加</h2>
+<h2 style="color: #ff5447;">西安 GDG 社区交流活动！</h2>
+
+---
+class: center, middle
+
+# 那些迷人的 Chrome 扩展特性
+[greatghoul@GDG西安201401]
+
+---
+
+## Event Pages
+
+ * 只在必要时才加载
+ * 建议使用 Alarms 替代 `setTimout` 和 `setInterval`
+ * Event Pages v.s. Background Pages
+
+.footnote[Since 22]
+
+---
+
+Background Pages:
+
+    {
+      "name": "My extension",
+      ...
+      "background": {
+        "scripts": ["background.js"]
+      },
+      ...
+    }
+
+---
+
+Event Pages:
+
+    {
+      "name": "My extension",
+      ...
+      "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
+      },
+      ...
+    }
+
+---
+
+## storage
+
+针对 Chrome 扩展而优化的数据存储功能
+
+ * 随 Google 帐户同步的数据存储
+ * 可以直接在 content scripts 中直接访问
+ * 读写都是异步进行，响应更快，当然也带来一些不便
+ * 数据可以存储为对象，而非字段串
+ * 可以定义要存储的数据的格式以严格验证
+ * 可以监听 storage 的变化
+ * local / sync / managed
+
+.footnote[Since 20]
+
+---
+
+配额：
+
+ * sync
+   - `QUOTA_BYTES` ( 102,400, 100K )
+   - `QUOTA_BYTES_PER_ITEM` ( 4,096 )
+   - `MAX_ITEMS` ( 512 )
+   - `MAX_WRITE_OPERATIONS_PER_HOUR` ( 1,000 )
+   - `MAX_SUSTAINED_WRITE_OPERATIONS_PER_MINUTE` ( 10 )
+ * local
+   - `QUOTA_BYTES` ( 5,242,880, 5M )
+   - `unlimitedStorage`
+
+---
+
+chrome.storage.managed (readonly)
+
+manifest.json
+
+    "storage": {
+      "managed_schema": "schema.json"
+    },
+
+schema.json
+
+    {
+      "type": "object",
+      "properties": {
+        "AutoSave": {
+          "title": "Automatically save changes.",
+          "description": "If set to true then changes ..s.",
+          "type": "boolean"
+        },
+        // ...
+      }
+    }
+
+---
+
+## Cross Origin XHR 
+
+ * 基于 **pattern** 的白名单的跨域 XHR
+ * 请求扩展内部资源
+ * 避免直接 eval 脚本或 html
+ * Content Security Policy (CSP)
+
+---
+
+manifest.json
+
+    "permissions": [
+      "http://www.google.com/",
+      "https://www.google.com/"
+    ]
+
+Background.js
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://api.example.com/data.json", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        // JSON.parse does not evaluate the attacker's scripts.
+        var resp = JSON.parse(xhr.responseText);
+      }
+    }
+    xhr.send();
+
+---
+
+## webRequest
+
+ * 监听HTTP请求的执行状态
+ * 修改请求 cancel / rredirect / headers (limited) / auth 
+ * 修改请求需要额外的权限 **webRequestBlocking**
+ * 更快的 declarativeWebRequest (beta and dev)
+
+.footnote[Since 17]
+
+---
+
+## identity
+
+内置的 OAuth2 库
+
+ * 近水楼台先得月，访问自家 Google OAuth2 非常方便
+ * 对于第三方的 OAuth2，需要使用标准流程
+ * Chrome 自动缓存 access token 并代理其过期操作
+
+.footnote[Sine 19]
+
+---
+
+使用 Google 帐户登陆
+
+![使用 Google 帐户登陆](images/identity1.png)
+
+---
+
+在 chrome://identity-internals/ 查看授权信息
+
+![查看授权信息](images/identity2.png)
+
+---
+
+示例
+
+https://github.com/GoogleChrome/chrome-app-samples/tree/master/identity
+
+---
+
+## alarms
+
+ * 简单的定时任务，建议取代 `setTimeout` 和 `setInterval`
+ * 按名称唯一标识，重复创建会自动覆盖
+ * 触发方式：指定时间 / 延迟时间 / 周期时间
+ * 时间的最小粒度为**一分钟**
+ * 可以监听 onAlarm 事件
+
+.footnote[Since 22]
+
+---
+
+创建一个 alarm
+
+    chrome.alarms.create('alarmName', { periodInMinutes: 1 });
+
+监听 alarm 的触发
+
+    chrome.alarms.onAlarm.addListener(function(alarmInfo) {
+        if (alarm && alarm.name == 'alarmName') {
+            // do something
+        }
+    });
+
+---
+
+## commands
+
+ * 支持 A-Z, 0-9, Arrow keys 及很多其它的控制键  
+ * 所以快捷键必须和 **Ctrl** 或 Alt 组合使用
+ * Chrome 原生的快捷键优秀级高于扩展快捷键，且不能被覆盖
+ * 适应不同平台 default / windows / mac / chromeos / linux
+ * 扩展预留 `_execute_browser_action` 和 `_execute_page_action`
+ * 用户可以在扩展页面中自己定义快捷键
+
+---
+
+定义快捷键
+
+    "commands": {
+      "toggle-feature-foo": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+Y"
+        }
+      },
+      "_execute_browser_action": {
+        "suggested_key": {
+          "windows": "Ctrl+Shift+Y",
+          "mac": "Command+Shift+Y",
+          "chromeos": "Ctrl+Shift+U",
+          "linux": "Ctrl+Shift+J"
+        }
+      },
+    },
+
+响应快捷键的触发事件
+
+    chrome.commands.onCommand.addListener(function(command) {
+      console.log('Command:', command);
+    });
+
+---
+
+用户自定义快捷键
+
+![自定义](images/commands1.png)
+
+---
+
+## 其它特性
+
+ * clipboard
+ * pushMessaging
+ * desktopCapture
+
+---
+
+## 参考资料
+
+ * [Chrome Extension Documentation](ps://developer.chrome.com/extensions/overview.html)
+ * [Chrome 扩展文档非官方中文版](https://crxdoc-zh.appspot.com/apps/gcm.html)
+ * [Chromium Extensions Google 讨论组](https://groups.google.com/forum/#!forum/chromium-extensions)
+ * [Chrome App Samples](https://github.com/GoogleChrome/chrome-app-samples)
+ * [Chrome Sample Extensions](https://developer.chrome.com/extensions/samples.html)
+ * [GDG-Xian@Github](https://github.com/organizations/GDG-Xian)
+ * [Chrome Extension@Reddit](http://www.reddit.com/r/chrome_extensions)
+
+---
+name: last-page
+class: center, middle
+
+<img src="../themes/gdg-xian/gdg.png" width="50%" />
+
+# 开放 分享 创新
+
+## [developers.google.com](http://developers.google.com)
+</textarea>
+<div id="slideshow"></div>
+<script src="../remark-0.5.9.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var hljs = remark.highlighter.engine;
+  var slideshow = remark.create({
+    highlightStyle: 'monokai'
+  });
+</script>
+</body>
+</html>
