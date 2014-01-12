@@ -85,7 +85,6 @@ Event Pages:
  * 可以直接在 content scripts 中直接访问
  * 读写都是异步进行，响应更快，当然也带来一些不便
  * 数据可以存储为对象，而非字段串
- * 可以定义要存储的数据的格式以严格验证
  * 可以监听 storage 的变化
  * local / sync / managed
 
@@ -104,6 +103,23 @@ Event Pages:
  * local
    - `QUOTA_BYTES` ( 5,242,880, 5M )
    - `unlimitedStorage`
+
+---
+
+写数据：
+
+    chrome.storage.sync.set({'keyName': theValue}, function() {
+        // Notify that we saved.
+        message('Settings saved');
+    });
+
+读数据：
+
+    chrome.storage.sync.get({'keyName': 'default value'}, function(items) {});
+
+    chrome.storage.sync.get('keyName', function(items) {});
+
+    chrome.storage.sync.get(['keyName1', 'keyName2'], function(items) {});
 
 ---
 
@@ -139,9 +155,9 @@ https://github.com/GoogleChrome/chrome-app-samples?source=c#_feature_storage
 
 ## Cross Origin XHR 
 
- * 基于 **pattern** 的白名单的跨域 XHR
- * 请求扩展内部资源
- * 避免直接 eval 脚本或 html
+ * 域名白名单
+ * 访问扩展内部资源
+ * 建议不要直接 eval 脚本或 html
  * Content Security Policy (CSP)
 
 ---
