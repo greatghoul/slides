@@ -248,7 +248,7 @@ https://github.com/GoogleChrome/chrome-app-samples?source=c#_feature_identity
 
 监听 alarm 的触发
 
-    chrome.alarms.onAlarm.addListener(function(alarmInfo) {
+    chrome.alarms.onAlarm.addListener(function(alarm) {
         if (alarm && alarm.name == 'alarmName') {
             // do something
         }
