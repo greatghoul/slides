@@ -45,7 +45,7 @@ theme: gaia
 ---
 
 ## 加入我们
-![bg]加入我们QR.png)
+![bg](加入我们QR.png)
 
 ---
 
