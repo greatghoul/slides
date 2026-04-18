@@ -5,6 +5,7 @@ slides
 
 | Date | Tag | Title |
 |------|-----|-------|
+| 2026-04-18 | #build-with-ai | [Build with AI 2026 - 云计算信用额度](./buildwithai-2026-credit/) |
 | 2025-12-27 | #gdg-xian | [GDG西安介绍](./gdgxian-intro/) |
 | 2014-01-12 | #gdg-xian | [那些迷人的Chrome扩展特性][slide5] |
 | 2013-12-14 | #gdg-xian | [Alembic Database Migration][slide4] |
